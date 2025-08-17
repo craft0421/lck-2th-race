@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>2025 Worlds Champion - T1</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      font-family: 'Pretendard', 'Segoe UI', 'Malgun Gothic', sans-serif;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 0 0 20px;
+      color: #ff2a2a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin: 0 0 40px;
+      color: #aaa;
+      z-index: 2;
+    }
+
+    img {
+      width: 720px;
+      max-width: 95%;
+      border-radius: 12px;
+      box-shadow: 0 14px 50px rgba(255,42,42,0.45);
+      border: none;
+      z-index: 2;
+      position: relative;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.85rem;
+      color: #555;
+      letter-spacing: 1px;
+      z-index: 2;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>T1</h1>
+  <h2>2025 League of Legends World Champion</h2>
+  <img src="t1.png" alt="T1 우승 이미지">
+  <footer>© 2025 Worlds</footer>
+
+  <canvas id="fireCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById("fireCanvas");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+let lastX = 0, lastY = 0;
+let vx = 0, vy = 0;
+
+// 따뜻한 색상 팔레트 (붉은~금빛)
+const baseColors = [
+  {h: 0,   s: 85, l: 55},  // 붉은색
+  {h: 15,  s: 90, l: 55},  // 주황빛
+  {h: 25,  s: 95, l: 55},  // 진한 주황
+  {h: 45,  s: 90, l: 60}   // 금빛
+];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+class Particle {
+  constructor(x, y, dirX, dirY) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 2 + 1.5; // ✅ 입자 작게 → 섬세한 느낌
+    this.speedX = (Math.random() - 0.5) * 1.5 - dirX * 0.2; // ✅ 반대방향 튀기되 세기 줄임
+    this.speedY = (Math.random() - 0.5) * 1.5 - dirY * 0.2;
+    this.life = 1;
+
+    // 색상 랜덤 보정 (채도/명도 폭 넓혀서 다양성)
+    const c = baseColors[Math.floor(Math.random() * baseColors.length)];
+    const s = c.s + (Math.random() * 30 - 15); // ±15%
+    const l = c.l + (Math.random() * 30 - 15); // ±15%
+    this.color = `hsl(${c.h}, ${Math.max(50, Math.min(100, s))}%, ${Math.max(25, Math.min(85, l))}%)`;
+  }
+
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.size *= 0.97;   // ✅ 더 천천히 줄어듦
+    this.life -= 0.015;  // ✅ 수명 살짝 늘려서 오래 반짝
+  }
+
+  draw() {
+    ctx.globalAlpha = this.life;
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+function animate() {
+  // ✅ 잔상 효과 더 은은하게 (부드러운 반짝임)
+  ctx.fillStyle = "rgba(0,0,0,0.15)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach((p, i) => {
+    p.update();
+    p.draw();
+    if (p.life <= 0 || p.size <= 0.5) particles.splice(i, 1);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener("mousemove", (e) => {
+  vx = e.clientX - lastX; 
+  vy = e.clientY - lastY;
+  lastX = e.clientX;
+  lastY = e.clientY;
+
+  for (let i = 0; i < 3; i++) { // ✅ 개수 줄임 → 폭죽 아님, 잔잔한 반짝임
+    particles.push(new Particle(e.clientX, e.clientY, vx, vy));
+  }
+});
+
+animate();
+</script>
+
+</body>
+</html>

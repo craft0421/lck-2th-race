@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCK 2위 결정전</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #222;
+            color: #fff;
+            padding: 24px 0 16px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+        }
+        main {
+            max-width: 420px;
+            margin: 32px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            padding: 32px 24px 24px 24px;
+        }
+        p {
+            font-size: 1.08rem;
+            margin: 18px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .score-select {
+            font-size: 1rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: #f3f4f6;
+            transition: border 0.2s;
+            width: 150px;
+        }
+        .score-select:focus {
+            border-color: #6366f1;
+            outline: none;
+        }
+        .highlight {
+            border-radius: 8px;
+            padding: 10px 8px;
+            font-weight: 500;
+        }
+        .not_highlight {
+            background: #fff;
+            border-radius: 8px;
+            padding: 10px 8px;
+            font-weight: 500;
+        }
+        #calc-btn {
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+            transition: background 0.2s;
+            align-items: center;
+        }
+        #easteregg {
+            color: #222;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            align-items: center;
+        }
+        #calc-btn:hover {
+            background: #4338ca;
+        }
+        #sum-result {
+            margin-top: 28px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 600;
+            color: #2563eb;
+            min-height: 32px;
+        }
+    </style>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>LCK 2위 결정전</h1>
+        <button id="easteregg" style="font-size:0.95rem; padding:6px 16px; background:transparent; transition:background 0.2s;">
+            이스터에그 : 월즈 우승자 예측
+        </button>
+        <script>
+            const headerBtn = document.getElementById('easteregg');
+            headerBtn.addEventListener('mouseenter', () => {
+                headerBtn.style.background = '#ff8a80';
+            });
+            headerBtn.addEventListener('mouseleave', () => {
+                headerBtn.style.background = 'transparent';
+            });
+            headerBtn.addEventListener('click', () => {
+                window.location.href = 'worlds_winner.html';
+            });
+        </script>
+    </header>
+    <main>
+        <p class="not_highlight">
+            KT vs HLE
+            <select class="score-select">
+                <option value=-2>2 : 0 KT 승</option>
+                <option value=-1>2 : 1 KT 승</option>
+                <option value=1>1 : 2 HLE 승</option>
+                <option value=2>0 : 2 HLE 승</option>
+            </select>
+        </p>
+        <p class="not_highlight">
+            NS vs T1
+            <select class="score-select">
+                <option value=2>2 : 0 NS 승</option>
+                <option value=1>2 : 1 NS 승</option>
+                <option value=-1>1 : 2 T1 승</option>
+                <option value=-2>0 : 2 T1 승</option>
+            </select>
+        </p>
+        <p class="not_highlight">
+            HLE vs GEN
+            <select class="score-select">
+                <option value=2>2 : 0 HLE 승</option>
+                <option value=1>2 : 1 HLE 승</option>
+                <option value=-1>1 : 2 GEN 승</option>
+                <option value=-2>0 : 2 GEN 승</option>
+            </select>
+        </p>
+        <p class="not_highlight">
+            KT vs T1
+            <select class="score-select">
+                <option value=2>2 : 0 KT 승</option>
+                <option value=1>2 : 1 KT 승</option>
+                <option value=-1>1 : 2 T1 승</option>
+                <option value=-2>0 : 2 T1 승</option>
+            </select>
+        </p>
+        <p class="highlight" style="border: 2.5px solid #ff8a80; box-shadow: 0 0 12px #ff8a80a0; background: linear-gradient(90deg, #ff8a80 0%, #ffd6d6 100%); color: #b71c1c;">
+            <span style="font-size:1.15rem; font-weight:700; letter-spacing:1px; margin-right:10px;">
+            T1 vs HLE
+            </span>
+            <select class="score-select" style="border: 2px solid #b71c1c; background: #fff0f0;">
+            <option value=4>2 : 0 T1 승</option>
+            <option value=-2>2 : 1 T1 승</option>
+            <option value=2>1 : 2 HLE 승</option>
+            <option value=4>0 : 2 HLE 승</option>
+            </select>
+        </p>
+        <p class="not_highlight">
+            HLE vs NS
+            <select class="score-select">
+                <option value=2>2 : 0 HLE 승</option>
+                <option value=1>2 : 1 HLE 승</option>
+                <option value=-1>1 : 2 NS 승</option>
+                <option value=-2>0 : 2 NS 승</option>
+            </select>
+        </p>
+        <p class="not_highlight">
+            T1 vs GEN
+            <select class="score-select">
+                <option value=-2>2 : 0 T1 승</option>
+                <option value=-1>2 : 1 T1 승</option>
+                <option value=1>1 : 2 GEN 승</option>
+                <option value=2>0 : 2 GEN 승</option>
+            </select>
+        </p>
+        <p style="display: flex; justify-content: center;">
+            <button id="calc-btn">결과 도출</button>
+        </p>
+        <div id="sum-result"></div>
+    </main>
+    <script>
+        document.getElementById('calc-btn').addEventListener('click', function() {
+            let sum = 1;
+            document.querySelectorAll('.score-select').forEach(select => {
+                sum += Number(select.value);
+            });
+            let resultText = '';
+            if (sum > 0) {
+                resultText = 'HLE가 2위로 결승 진출';
+            } else if (sum < 0) {
+                resultText = 'T1이 2위로 결승 진출';
+            } else {
+                const highlightSelect = document.querySelector('p.highlight .score-select');
+                const selectedValue = Number(highlightSelect.value);
+                if (selectedValue > 0) {
+                    resultText = 'HLE가 2위로 결승 진출(승자승)';
+                } else if (selectedValue < 0) {
+                    resultText = 'T1이 2위로 결승 진출(승자승)';
+                } else {
+                    resultText = '불가능한 경우(버그 발생)';
+                }
+            }
+            document.getElementById('sum-result').textContent = resultText;
+        });
+    </script>
+</body>
+</html>
